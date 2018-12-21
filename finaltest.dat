@@ -1,0 +1,458 @@
+/RGB,INDEX,100,100,100, 0   
+/RGB,INDEX, 80, 80, 80,13   
+/RGB,INDEX, 60, 60, 60,14   
+/RGB,INDEX, 0, 0, 0,15  
+
+/REPLOT,RESIZE  
+/CLEAR,NOSTART 
+NZ=24.000000 !齿数：
+TH=1.5 !平均齿高：
+WTH=1.5 !外侧斜齿高
+NTH=1.5 !内侧斜齿高
+WDTH=0.0 !齿外侧导角高度
+WDTL=0.0 !齿外侧导水平长度
+NDTH=0.0 !齿内侧导角高度
+NDTL=0.0 !齿内侧导水平长度
+TT=2 !齿厚：
+TW=0.1 !齿槽宽：
+ITD=8 !定子齿内圈直径：
+OTD=13.3 !定子齿外圈直径：
+IAD=2.1 !轴内圈直径：
+OAD=6 !轴外圈直径：
+AT=1.6 !轴厚度
+PT=0.4 !压电片厚：
+IPD=8 !压电片内圈直径：
+OPD=13.3 !压电片外圈直径：
+EW= ITD-OAD !宽度：
+ET=0.2 !厚度：
+EH=0.2 !台阶高：
+BS=4 !波数
+FK=5 !定子分块建模分块数与齿数成整数倍的关系 
+
+NZ=NZ !齿数：
+TH=TH/1000 !齿高：
+WTH=WTH/1000 !外侧斜齿高
+NTH=NTH/1000 !内侧斜齿高
+WDTH=WDTH/1000 !齿外侧导角高度
+WDTL=WDTL/1000 !齿外侧导水平长度
+NDTH=NDTH/1000 !齿内侧导角高度
+NDTL=NDTL/1000 !齿内侧导水平长度
+TT=TT/1000 !齿厚：
+TW=TW/1000 !齿槽宽：
+ITD=ITD/1000 !定子齿内圈直径：
+OTD=OTD/1000 !定子齿外圈直径：
+IAD=IAD/1000 !轴内圈直径：
+OAD=OAD/1000 !轴外圈直径：
+AT=AT/1000 !轴厚度
+PT=PT/1000 !压电片厚：
+IPD=IPD/1000 !压电片内圈直径：
+OPD=OPD/1000 !压电片外圈直径：
+EW= EW/1000 !宽度：
+ET=ET/1000 !厚度：
+EH=EH/1000 !台阶高：
+
+/PREP7 
+!定义单元和材料属性
+ET,1,SOLID185   
+MPTEMP,,,,,,,,  
+MPTEMP,1,0  
+MPDATA,DENS,1,,8290
+MPTEMP,,,,,,,,  
+MPTEMP,1,0  
+MPDATA,EX,1,,1.06E+011   
+MPDATA,PRXY,1,,0.35 
+
+ET,2,SOLID5 
+MPTEMP,,,,,,,,  
+MPTEMP,1,0     
+MPDATA,DENS,2,,7750   
+MPTEMP,,,,,,,,  
+MPTEMP,1,0  
+MPDATA,PERX,2,,919E-009
+MPDATA,PERY,2,,919E-009   
+MPDATA,PERZ,2,,826E-009
+TB,PIEZ,2,,,0   
+TBMODIF,1,1,0   
+TBMODIF,1,2,0   
+TBMODIF,1,3,-5.35   
+TBMODIF,2,1,0   
+TBMODIF,2,2,0   
+TBMODIF,2,3,-5.35   
+TBMODIF,3,1,0   
+TBMODIF,3,2,0   
+TBMODIF,3,3,15.78   
+TBMODIF,4,1,0   
+TBMODIF,4,2,0   
+TBMODIF,4,3,0   
+TBMODIF,5,1,0   
+TBMODIF,5,2,12.3
+TBMODIF,5,3,0   
+TBMODIF,6,1,12.3
+TBMODIF,6,2,0   
+TBMODIF,6,3,0   
+TB,ANEL,2,1,21,0
+TBTEMP,0
+TBDATA,,1.2035E+011,7.52E+010,7.51E+010,0,0,0   
+TBDATA,,1.204E+011,7.51E+010,0,0,0,1.109E+011   
+TBDATA,,0,0,0,2.26E+010,0,0 
+TBDATA,,2.12E+010,0,2.11E+010,,,
+
+!超声波电机模型建立
+K,1,OAD/2,,,
+K,2,ITD/2,,,
+K,3,ITD/2,-EH,,!最上面
+K,4,OTD/2,-EH,,
+K,5,OTD/2,-EH+TT-TH,,
+K,6,ITD/2,-EH+TT-TH,,
+K,7,ITD/2,ET,,
+K,8,OAD/2,ET,,
+K,11,ITD/2,-EH-PT,,!最下面
+K,12,OTD/2,-EH-PT,,
+K,13,OTD/2,-EH+TT,,
+K,14,ITD/2,-EH+TT,,
+K,15,IAD/2,ET,,
+K,16,IAD/2,0,,
+K,17,IAD/2,-AT+ET,,
+K,18,OAD/2,-AT+ET,,
+
+K,100,0,0,0,
+K,101,0,0.003,0,
+
+LSTR,1,2
+LSTR,2,3
+LSTR,3,4
+LSTR,4,5
+LSTR,5,6
+LSTR,6,7
+LSTR,7,8
+LSTR,8,1
+LSTR,3,11
+LSTR,11,12
+LSTR,12,4
+LSTR,5,13
+LSTR,13,14
+LSTR,14,6
+LSTR,2,7
+LSTR,8,15
+LSTR,15,16
+LSTR,1,16
+LSTR,16,17
+LSTR,17,18
+LSTR,1,18
+
+AL,1,15,7,8
+AL,15,2,3,4,5,6,
+AL,9,10,11,3
+AL,5,12,13,14
+AL,8,16,17,18
+AL,18,19,20,21
+
+VROTAT,1,2,3,4, , ,100,101 ,360/FK, , !!!!!
+VROTAT,5,6, , , , ,100,101 ,360/FK, , !!!!!
+BLC4,0,TT-EH,OTD,-TH,TW !建立长方体
+VGEN, ,7, , , , ,-TW/2, , ,1!复制创建体  
+VOVLAP,4,7 !布尔操作
+VDELE,10, , ,1!删除体
+VSYMM,Z,8, , , ,0,0 !体镜像 
+
+!建立齿槽
+CSYS,5  
+WPSTYLE,,,,,,,,0
+VGEN,NZ/FK+1,4, , , ,360/NZ, , ,0  
+VGEN,NZ/FK+1,8, , , ,360/NZ, , ,0  
+VOVLAP,ALL
+*DO,I,1,NZ/FK+1
+CSYS,0
+VSEL,S,LOC,Y,TT-EH-TH/1.5,1
+CSYS,5
+VSEL,R,LOC,Y,(I-1)*360/NZ-TW/2/3.1415/ITD*360,TW/2/3.1415/ITD*360+(I-1)*360/NZ!选择体
+VDELE,ALL, , ,1
+ALLSEL,ALL 
+*ENDDO
+
+!旋转成体
+EPLOT 
+CSYS,5 
+VGEN,FK,ALL, , , ,360/FK, , ,0 
+
+!Glue体
+VGLUE,ALL
+
+!添加材料属性
+ALLSEL,ALL
+CSYS,0
+VSEL,S,LOC,Y,0,TT-EH
+VATT,       1, ,   1,       0   
+CSYS,5
+VSEL,S,LOC,X,0,OAD/2
+VATT,       1, ,   1,       0 
+
+ALLSEL,ALL
+CSYS,0
+VSEL,R,LOC,Y,-EH-PT,-EH
+VATT,       2, ,  2,       0  
+ALLSEL,ALL
+
+!网格体
+CSYS,0
+VSEL,R,LOC,Y,-EH-PT,-EH
+VSWEEP,ALL
+
+CSYS,0
+ALLSEL,ALL 
+VSEL,S,MAT,,1
+SMRT,6  
+SMRT,5  
+SMRT,4  
+MSHAPE,1,3d
+MSHKEY,0
+VMESH,ALL
+
+ALLSEL,ALL
+
+!模态分析 
+/SOL  
+ANTYPE,2
+MODOPT,LANB,22  
+EQSLV,SPAR  
+MXPAND,0, , ,0  
+LUMPM,0 
+PSTRES,0
+MODOPT,LANB,22,0,80000, ,OFF
+
+CSYS,5
+ASEL,S,LOC,X,-IAD/2,IAD/2   
+DA,ALL,ALL,
+ALLSEL,ALL
+
+!OUTPR,BASIC,ALL,  
+!OUTRES,ALL,ALL,
+ 
+/STATUS,SOLU
+SOLVE   
+FINISH
+CSYS,0
+ALLSEL,ALL
+
+/POST1  
+SET,FIRST   
+/EFACET,1   
+PLNSOL, U,SUM, 2,1.0 !无轮廓2变0
+/post1
+*do,i,8,22
+set,1,i
+/VIEW,1,1,2,3   
+/ANG,1  
+/REP,FAST  
+/show,jpeg,,
+plnsol,u,sum,0,1.0
+/show,close
+*enddo
+FINISH
+
+!振幅仿真
+/SOL
+ANTYPE,3
+HROPT,FULL  
+HROUT,ON
+LUMPM,0 
+EQSLV, ,0,  
+PSTRES,0
+
+!阻尼特性
+ALPHAD,0,   
+BETAD,0,
+DMPSTR,0.005,   
+
+!压电耦合
+*do,i,1,(BS-1)
+ALLSEL,ALL
+csys,5
+nsel,S,LOC,X,ITD/2,OTD/2
+csys,0
+nsel,R,loc,y,-eh-eq-pt
+csys,5
+angle=360/BS
+nsel,r,loc,y,(i-1)*angle/2,i*angle/2
+b=1/2*(1-(-1)**i)*1
+c=1/2*(1-(-1)**(i+1))*1
+D,All,VOLT,b,c
+*enddo
+
+ALLSEL,ALL
+csys,5
+nsel,S,LOC,X,ITD/2,OTD/2
+csys,0
+nsel,R,loc,y,-eh-eq-pt
+csys,5
+angle=360/BS
+nsel,r,loc,y,(BS-1)*angle/2,((BS-1)*angle/2+3*angle/8)
+D,All,VOLT,(1/2*(1-(-1)**BS)*1),(1/2*(1-(-1)**(BS+1))*1)
+
+ALLSEL,ALL
+csys,5
+nsel,S,LOC,X,ITD/2,OTD/2
+csys,0
+nsel,R,loc,y,-eh-eq-pt
+csys,5
+angle=360/BS
+nsel,r,loc,y,((BS-1)*angle/2+3*angle/8),((BS-1)*angle/2+3*angle/4)
+D,All,VOLT,(1/2*(1-(-1)**(BS+1))*1),(1/2*(1-(-1)**(BS+2))*1)
+
+*do,i,1,(BS-1)
+ALLSEL,ALL
+csys,5
+nsel,S,LOC,X,ITD/2,OTD/2
+csys,0
+nsel,R,loc,y,-eh-eq-pt
+csys,5
+angle=360/BS
+nsel,r,loc,y,((BS-1)*angle/2+3*angle/4+(i-1)*angle/2),((BS-1)*angle/2+3*angle/4+(i)*angle/2)
+e=1/2*(1-(-1)**(BS+1+i))*1
+f=1/2*(1-(-1)**(BS+2+i))*1
+D,All,VOLT,e,f
+*enddo
+
+ALLSEL,ALL
+csys,5
+nsel,S,LOC,X,ITD/2,OTD/2
+csys,0
+nsel,r,loc,y,-eh-eq
+D,All,VOLT,0,0
+ALLSEL,ALL 
+
+HARFRQ,26000,76000, 
+NSUBST,5,  
+KBC,1
+/STATUS,SOLU
+SOLVE
+
+!选最大位移点
+/POST1
+NSORT,U,SUM,0,1, ,SELECT  
+PRNSOL,U,Z
+*get,node,SORT,0,IMAX
+
+!结果显示,打开后处理器
+/POST26 
+FILE,'finaltest','rst','.'   
+/UI,COLL,1  
+NUMVAR,200  
+SOLU,191,NCMIT  
+STORE,MERGE 
+PLCPLX,0
+PRCPLX,1
+FILLDATA,191,,,,1,1 
+REALVAR,191,191 
+
+!z方向位移 
+NSOL,2,node,U,Z, UZ_2, 
+STORE,MERGE 
+
+!保存为txt(excel也行)
+/post26
+! Save time history variables to file zmovement.prn
+*CREATE,scratch,gui 
+*DEL,_P26_EXPORT
+*DIM,_P26_EXPORT,TABLE,5,2 
+VGET,_P26_EXPORT(1,0),1 
+VGET,_P26_EXPORT(1,1),2,,0  
+VGET,_P26_EXPORT(1,2),2,,1  
+/OUTPUT,'zmovement','prn','.'  
+*VWRITE,'FREQ','UZ_2',' '   
+%14C %14C %14C
+*VWRITE,' ','REAL','IMAGINARY'  
+%14C %14C %14C  
+*VWRITE,_P26_EXPORT(1,0),_P26_EXPORT(1,1),_P26_EXPORT(1,2)  
+%14.5G %14.5G %14.5G
+/OUTPUT,TERM
+*END
+/INPUT,scratch,gui  
+! End of time history save  
+
+!x方向位移 
+NSOL,3,node,U,X, UX_3, 
+STORE,MERGE 
+
+!保存为txt(excel也行)
+/post26
+! Save time history variables to file xmovement.prn
+*CREATE,scratch,gui 
+*DEL,_P26_EXPORT
+*DIM,_P26_EXPORT,TABLE,5,2 
+VGET,_P26_EXPORT(1,0),1 
+VGET,_P26_EXPORT(1,1),3,,0  
+VGET,_P26_EXPORT(1,2),3,,1  
+/OUTPUT,'xmovement','prn','.'  
+*VWRITE,'FREQ','UX_3',' '   
+%14C %14C %14C  
+*VWRITE,' ','REAL','IMAGINARY'  
+%14C %14C %14C  
+*VWRITE,_P26_EXPORT(1,0),_P26_EXPORT(1,1),_P26_EXPORT(1,2)  
+%14.5G %14.5G %14.5G
+/OUTPUT,TERM
+*END
+/INPUT,scratch,gui  
+! End of time history save
+
+!y方向位移 
+NSOL,4,node,U,Y, UY_4, 
+STORE,MERGE 
+
+!保存为txt(excel也行)
+/post26
+! Save time history variables to file ymovement.prn
+*CREATE,scratch,gui 
+*DEL,_P26_EXPORT
+*DIM,_P26_EXPORT,TABLE,5,2 
+VGET,_P26_EXPORT(1,0),1 
+VGET,_P26_EXPORT(1,1),4,,0  
+VGET,_P26_EXPORT(1,2),4,,1  
+/OUTPUT,'ymovement','prn','.'  
+*VWRITE,'FREQ','UY_4',' '   
+%14C %14C %14C  
+*VWRITE,' ','REAL','IMAGINARY'  
+%14C %14C %14C  
+*VWRITE,_P26_EXPORT(1,0),_P26_EXPORT(1,1),_P26_EXPORT(1,2)  
+%14.5G %14.5G %14.5G
+/OUTPUT,TERM
+*END
+/INPUT,scratch,gui  
+! End of time history save
+
+!选择电流点
+RFORCE,2,180,AMPS,, AMPS_2  
+STORE,MERGE 
+FILLDATA,192,,,,0,0 
+FILLDATA,193,,,,1,0 
+FILLDATA,194,,,,-1,0
+FILLDATA,195,,,,1,1 
+VARNAME,195,NSET
+! Name: Z   
+! ID:  3
+! Function: 1/{AMPS_2}  
+FILLDATA,199,,,,1,0 
+REALVAR,199,199 
+QUOT,3,199,2,,Z 
+STORE,MERGE 
+
+!保存为txt(excel也行)
+/post26
+! Save time history variables to file current.prn   
+*CREATE,scratch,gui 
+*DEL,_P26_EXPORT
+*DIM,_P26_EXPORT,TABLE,5,2 
+VGET,_P26_EXPORT(1,0),1 
+VGET,_P26_EXPORT(1,1),3,,0  
+VGET,_P26_EXPORT(1,2),3,,1  
+/OUTPUT,'current','prn','.' 
+*VWRITE,'FREQ','Z',' '  
+%14C %14C %14C  
+*VWRITE,' ','REAL','IMAGINARY'  
+%14C %14C %14C  
+*VWRITE,_P26_EXPORT(1,0),_P26_EXPORT(1,1),_P26_EXPORT(1,2)  
+%14.5G %14.5G %14.5G
+/OUTPUT,TERM
+*END
+/INPUT,scratch,gui  
+! End of time history save 
